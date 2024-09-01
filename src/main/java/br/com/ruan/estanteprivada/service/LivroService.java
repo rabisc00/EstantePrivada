@@ -28,7 +28,7 @@ public class LivroService {
     private final ConsomeApi CONSOME_API = new ConsomeApi();
     private final ConverteDados CONVERSOR = new ConverteDados();
 
-    public List<LivroTempDTO> buscarLivros(String titulo, String autor, String editora, String isbn, Integer pagina) {
+    public List<LivroTempDTO> buscarLivrosApi(String titulo, String autor, String editora, String isbn, Integer pagina) {
         String q = "";
 
         if (titulo != null && !titulo.isEmpty()) q += titulo;
@@ -81,5 +81,12 @@ public class LivroService {
         var newLivro = new Livro(livroGb.volumeInfo());
 
         livroRepository.save(newLivro);
+    }
+
+    public List<LivroDTO> listarLivros() {
+        var todosLivros = livroRepository.findAll();
+        return todosLivros.stream()
+                .map(LivroDTO::new)
+                .collect(Collectors.toList());
     }
 }

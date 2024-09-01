@@ -6,7 +6,6 @@ import br.com.ruan.estanteprivada.request.PostLivroRequest;
 import br.com.ruan.estanteprivada.service.LivroService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +23,16 @@ public class LivroController {
                                                             @RequestParam(name = "editora", required = false) String editora,
                                                             @RequestParam(name = "isbn", required = false) String isbn,
                                                             @RequestParam(name = "pagina") Integer pagina) {
-        return livroService.buscarLivros(titulo, autor, editora, isbn, pagina);
+        return livroService.buscarLivrosApi(titulo, autor, editora, isbn, pagina);
+    }
+
+    @GetMapping
+    public List<LivroDTO> listarLivros() {
+        return livroService.listarLivros();
     }
 
     @PostMapping
-    public ResponseEntity criarLivro(@RequestBody PostLivroRequest request) {
+    public ResponseEntity<String> criarLivro(@RequestBody PostLivroRequest request) {
         try {
             livroService.salvarLivro(request.id());
             return ResponseEntity.ok().build();
