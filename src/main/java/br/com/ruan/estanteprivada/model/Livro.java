@@ -18,8 +18,8 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
-    private String descricao;
+    @Column(columnDefinition = "varchar(500)")
+    private String imagem;
 
     private String titulo;
     private String subtitulo;
@@ -28,7 +28,6 @@ public class Livro {
     private String isbn;
     private String categorias;
     private String idioma;
-    private String imagem;
     private LocalDate dataPublicacao;
 
     public Livro() {}
@@ -36,7 +35,7 @@ public class Livro {
     public Livro(VolumeGB dadosLivro) {
         this.titulo = dadosLivro.title();
         this.subtitulo = dadosLivro.subtitle();
-        this.descricao = dadosLivro.description();
+        this.editora = dadosLivro.publisher();
         this.idioma = dadosLivro.language();
         this.autores = dadosLivro.authors() != null ? String.join(", ", dadosLivro.authors()) : null;
         this.categorias = dadosLivro.categories() != null ? String.join(", ", dadosLivro.categories()) : null;
@@ -72,12 +71,12 @@ public class Livro {
         return autores;
     }
 
-    public LocalDate getDataPublicacao() {
-        return dataPublicacao;
+    public String getEditora() {
+        return editora;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public LocalDate getDataPublicacao() {
+        return dataPublicacao;
     }
 
     public String getIsbn() {
@@ -90,5 +89,9 @@ public class Livro {
 
     public String getIdioma() {
         return idioma;
+    }
+
+    public String getImagem() {
+        return imagem;
     }
 }

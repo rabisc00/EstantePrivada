@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ConsomeApi {
-    public String obterDados(String requestUri) {
+    public HttpResponse obterDados(String requestUri) {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestUri))
@@ -20,6 +20,6 @@ public class ConsomeApi {
             throw new RuntimeException(e);
         }
 
-        return response.body();
+        return response;
     }
 }
