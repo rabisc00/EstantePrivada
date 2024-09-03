@@ -12,7 +12,6 @@ public record VolumeGB(@JsonAlias("title") String title,
                        @JsonAlias("publisher") String publisher,
                        @JsonAlias("publishedData") String publishedDate,
                        @JsonAlias("industryIdentifiers") List<IndustryIdentifierGB> industryIdentifiers,
-                       @JsonAlias("categories") List<String> categories,
                        @JsonAlias("imageLinks") ImageLinksGB imageLinks,
                        @JsonAlias("language") String language) {
 }

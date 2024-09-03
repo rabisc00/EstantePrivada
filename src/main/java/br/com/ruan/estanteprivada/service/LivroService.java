@@ -3,7 +3,7 @@ package br.com.ruan.estanteprivada.service;
 import br.com.ruan.estanteprivada.dados.ContainerGB;
 import br.com.ruan.estanteprivada.dados.IndustryIdentifierGB;
 import br.com.ruan.estanteprivada.dados.LivroGB;
-import br.com.ruan.estanteprivada.dto.LivroDTO;
+import br.com.ruan.estanteprivada.dto.LivroSnippetDTO;
 import br.com.ruan.estanteprivada.dto.LivroTempDTO;
 import br.com.ruan.estanteprivada.model.Livro;
 import br.com.ruan.estanteprivada.repository.LivroRepository;
@@ -49,7 +49,8 @@ public class LivroService {
             String imagem = l.volumeInfo().imageLinks() != null ? l.volumeInfo().imageLinks().thumbnail() : null;
             String autoresLivro = l.volumeInfo().authors() != null ? String.join(", ", l.volumeInfo().authors()) : null;
             Integer anoLancamento = l.volumeInfo().publishedDate() != null ?
-                    Integer.parseInt(Arrays.asList(l.volumeInfo().publishedDate().split("-")).get(0)) : null;
+                    Integer.parseInt(Arrays.asList(l.volumeInfo().publishedDate().split("-")).get(0).replace("?", "0")) :
+                    null;
 
             String isbnLivro = null;
             if (l.volumeInfo().industryIdentifiers() != null) {
@@ -83,10 +84,10 @@ public class LivroService {
         livroRepository.save(newLivro);
     }
 
-    public List<LivroDTO> listarLivros() {
+    public List<LivroSnippetDTO> listarLivros() {
         var todosLivros = livroRepository.findAll();
         return todosLivros.stream()
-                .map(LivroDTO::new)
+                .map(LivroSnippetDTO::new)
                 .collect(Collectors.toList());
     }
 }

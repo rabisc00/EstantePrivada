@@ -1,6 +1,6 @@
 package br.com.ruan.estanteprivada.controller;
 
-import br.com.ruan.estanteprivada.dto.LivroDTO;
+import br.com.ruan.estanteprivada.dto.LivroSnippetDTO;
 import br.com.ruan.estanteprivada.dto.LivroTempDTO;
 import br.com.ruan.estanteprivada.request.PostLivroRequest;
 import br.com.ruan.estanteprivada.service.LivroService;
@@ -27,7 +27,7 @@ public class LivroController {
     }
 
     @GetMapping
-    public List<LivroDTO> listarLivros() {
+    public List<LivroSnippetDTO> listarLivros() {
         return livroService.listarLivros();
     }
 
