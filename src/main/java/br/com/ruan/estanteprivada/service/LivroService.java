@@ -7,6 +7,7 @@ import br.com.ruan.estanteprivada.dto.LivroSnippetDTO;
 import br.com.ruan.estanteprivada.dto.LivroTempDTO;
 import br.com.ruan.estanteprivada.model.Livro;
 import br.com.ruan.estanteprivada.repository.LivroRepository;
+import br.com.ruan.estanteprivada.request.PutLivroRequest;
 import br.com.ruan.estanteprivada.util.ConsomeApi;
 import br.com.ruan.estanteprivada.util.ConverteDados;
 import org.apache.coyote.BadRequestException;
@@ -89,5 +90,58 @@ public class LivroService {
         return todosLivros.stream()
                 .map(LivroSnippetDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    public void atualizarLivro(PutLivroRequest request) throws BadRequestException {
+        Optional<Livro> livroUpdate = livroRepository.findById(request.id());
+
+        if (livroUpdate.isPresent()) {
+            var livroGet = livroUpdate.get();
+
+            if ((request.titulo() != null && !request.titulo().isEmpty()) &&
+                    (livroGet.getTitulo() == null || (livroGet.getTitulo() != null && !livroGet.getTitulo().equals(request.titulo())))) {
+                livroGet.setTitulo(request.titulo());
+            }
+
+            if ((request.subtitulo() != null && !request.subtitulo().isEmpty()) &&
+                    (livroGet.getSubtitulo() == null || (livroGet.getSubtitulo() != null && !livroGet.getSubtitulo().equals(request.subtitulo())))) {
+                livroGet.setSubtitulo(request.subtitulo());
+            }
+
+            if ((request.autores() != null && !request.autores().isEmpty()) &&
+                    (livroGet.getAutores() == null || (livroGet.getAutores() != null && !livroGet.getAutores().equals(request.autores())))) {
+                livroGet.setAutores(request.autores());
+            }
+
+            if ((request.editora() != null && !request.editora().isEmpty()) &&
+                    (livroGet.getEditora() == null || livroGet.getEditora() != null && !livroGet.getEditora().equals(request.editora()))) {
+                livroGet.setEditora(request.editora());
+            }
+
+            if ((request.imagem() != null && !request.imagem().isEmpty()) &&
+                    (livroGet.getImagem() == null || (livroGet.getImagem() != null && !livroGet.getImagem().equals(request.imagem())))) {
+                livroGet.setImagem(request.imagem());
+            }
+
+            if (request.anoPublicacao() != null &&
+                    (livroGet.getAnoPublicacao() == null || (livroGet.getAnoPublicacao() != null && !livroGet.getAnoPublicacao().equals(request.anoPublicacao())))) {
+                livroGet.setAnoPublicacao(request.anoPublicacao());
+            }
+
+            if ((request.isbn() != null && !request.isbn().isEmpty()) &&
+                    (livroGet.getIsbn() == null || (livroGet.getIsbn() != null && !livroGet.getIsbn().equals(request.isbn())))) {
+                livroGet.setIsbn(request.isbn());
+            }
+
+            if ((request.idioma() != null && !request.idioma().isEmpty()) &&
+                    (livroGet.getIdioma() == null || (livroGet.getIdioma() != null && !livroGet.getIdioma().equals(request.idioma())))) {
+                livroGet.setIdioma(request.isbn());
+            }
+
+            livroRepository.save(livroGet);
+        }
+        else {
+            throw new BadRequestException();
+        }
     }
 }

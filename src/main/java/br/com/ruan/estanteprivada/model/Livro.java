@@ -83,4 +83,36 @@ public class Livro {
     public String getImagem() {
         return imagem;
     }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public void setAnoPublicacao(Integer anoPublicacao) {
+        this.anoPublicacao = anoPublicacao;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setSubtitulo(String subtitulo) {
+        this.subtitulo = subtitulo;
+    }
+
+    public void setAutores(String autores) {
+        this.autores = autores;
+    }
+
+    public void setEditora(String editora) {
+        this.editora = editora;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
 }

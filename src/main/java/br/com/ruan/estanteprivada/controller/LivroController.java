@@ -3,6 +3,7 @@ package br.com.ruan.estanteprivada.controller;
 import br.com.ruan.estanteprivada.dto.LivroSnippetDTO;
 import br.com.ruan.estanteprivada.dto.LivroTempDTO;
 import br.com.ruan.estanteprivada.request.PostLivroRequest;
+import br.com.ruan.estanteprivada.request.PutLivroRequest;
 import br.com.ruan.estanteprivada.service.LivroService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,16 @@ public class LivroController {
             return ResponseEntity.ok().build();
         } catch (BadRequestException ex) {
             return ResponseEntity.badRequest().body("Id incorreto");
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<String> atualizarLivros(@RequestBody PutLivroRequest request) {
+        try {
+            livroService.atualizarLivro(request);
+            return ResponseEntity.ok().build();
+        } catch (BadRequestException ex) {
+            return ResponseEntity.badRequest().body("Id enviado não existe");
         }
     }
 }
