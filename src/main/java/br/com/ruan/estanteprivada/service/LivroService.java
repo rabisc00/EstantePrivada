@@ -3,6 +3,7 @@ package br.com.ruan.estanteprivada.service;
 import br.com.ruan.estanteprivada.dados.ContainerGB;
 import br.com.ruan.estanteprivada.dados.IndustryIdentifierGB;
 import br.com.ruan.estanteprivada.dados.LivroGB;
+import br.com.ruan.estanteprivada.dto.LivroDetalhadoDTO;
 import br.com.ruan.estanteprivada.dto.LivroSnippetDTO;
 import br.com.ruan.estanteprivada.dto.LivroTempDTO;
 import br.com.ruan.estanteprivada.model.Livro;
@@ -73,6 +74,18 @@ public class LivroService {
         }).collect(Collectors.toList());
     }
 
+    public LivroDetalhadoDTO buscarDetalhesLivro(Long id) throws BadRequestException {
+        Optional<Livro> livroOptional = livroRepository.findById(id);
+
+        if (livroOptional.isPresent()) {
+            var livro = livroOptional.get();
+            return new LivroDetalhadoDTO(livro);
+        }
+        else {
+            throw new BadRequestException();
+        }
+    }
+
     public void salvarLivro(String livroId) throws BadRequestException {
         String requestUrl = URL + "/" + livroId + "?" + API_KEY;
 
@@ -92,8 +105,8 @@ public class LivroService {
                 .collect(Collectors.toList());
     }
 
-    public void atualizarLivro(PutLivroRequest request) throws BadRequestException {
-        Optional<Livro> livroUpdate = livroRepository.findById(request.id());
+    public void atualizarLivro(Long livroId, PutLivroRequest request) throws BadRequestException {
+        Optional<Livro> livroUpdate = livroRepository.findById(livroId);
 
         if (livroUpdate.isPresent()) {
             var livroGet = livroUpdate.get();
@@ -139,6 +152,17 @@ public class LivroService {
             }
 
             livroRepository.save(livroGet);
+        }
+        else {
+            throw new BadRequestException();
+        }
+    }
+
+    public void excluirLivro(Long livroId) throws BadRequestException {
+        Optional<Livro> livroOptional = livroRepository.findById(livroId);
+
+        if (livroOptional.isPresent()) {
+            livroRepository.deleteById(livroId);
         }
         else {
             throw new BadRequestException();

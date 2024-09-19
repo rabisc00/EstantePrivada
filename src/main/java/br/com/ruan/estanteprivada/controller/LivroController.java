@@ -1,5 +1,6 @@
 package br.com.ruan.estanteprivada.controller;
 
+import br.com.ruan.estanteprivada.dto.LivroDetalhadoDTO;
 import br.com.ruan.estanteprivada.dto.LivroSnippetDTO;
 import br.com.ruan.estanteprivada.dto.LivroTempDTO;
 import br.com.ruan.estanteprivada.request.PostLivroRequest;
@@ -32,23 +33,23 @@ public class LivroController {
         return livroService.listarLivros();
     }
 
-    @PostMapping
-    public ResponseEntity<String> criarLivro(@RequestBody PostLivroRequest request) {
-        try {
-            livroService.salvarLivro(request.id());
-            return ResponseEntity.ok().build();
-        } catch (BadRequestException ex) {
-            return ResponseEntity.badRequest().body("Id incorreto");
-        }
+    @GetMapping(value = "/{livroId}")
+    public LivroDetalhadoDTO buscarDetalhesLivro(@PathVariable Long livroId) throws BadRequestException {
+        return livroService.buscarDetalhesLivro(livroId);
     }
 
-    @PutMapping
-    public ResponseEntity<String> atualizarLivros(@RequestBody PutLivroRequest request) {
-        try {
-            livroService.atualizarLivro(request);
-            return ResponseEntity.ok().build();
-        } catch (BadRequestException ex) {
-            return ResponseEntity.badRequest().body("Id enviado não existe");
-        }
+    @PostMapping
+    public void criarLivro(@RequestBody PostLivroRequest request) throws BadRequestException {
+        livroService.salvarLivro(request.id());
+    }
+
+    @PutMapping(value = "/{livroId}")
+    public void atualizarLivros(@PathVariable Long livroId, @RequestBody PutLivroRequest request) throws BadRequestException {
+        livroService.atualizarLivro(livroId, request);
+    }
+
+    @DeleteMapping(value = "/{livroId}")
+    public void excluirLivro(@PathVariable Long livroId) throws BadRequestException {
+        livroService.excluirLivro(livroId);
     }
 }
