@@ -4,7 +4,9 @@ import br.com.ruan.estanteprivada.dados.IndustryIdentifierGB;
 import br.com.ruan.estanteprivada.dados.VolumeGB;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -13,6 +15,9 @@ public class Livro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+    private List<Entrada> entradas = new ArrayList<>();
 
     @Column(columnDefinition = "varchar(500)")
     private String imagem;
@@ -114,5 +119,18 @@ public class Livro {
 
     public void setIdioma(String idioma) {
         this.idioma = idioma;
+    }
+
+    public List<Entrada> getEntradas() {
+        return entradas;
+    }
+
+    public void setEntradas(List<Entrada> entradas) {
+        this.entradas = entradas;
+    }
+
+    public void addEntrada(Entrada entrada) {
+        entrada.setLivro(this);
+        entradas.add(entrada);
     }
 }
