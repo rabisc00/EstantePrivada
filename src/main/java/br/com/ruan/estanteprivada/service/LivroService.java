@@ -148,7 +148,7 @@ public class LivroService {
 
             if ((request.idioma() != null && !request.idioma().isEmpty()) &&
                     (livroGet.getIdioma() == null || (livroGet.getIdioma() != null && !livroGet.getIdioma().equals(request.idioma())))) {
-                livroGet.setIdioma(request.isbn());
+                livroGet.setIdioma(request.idioma());
             }
 
             livroRepository.save(livroGet);
