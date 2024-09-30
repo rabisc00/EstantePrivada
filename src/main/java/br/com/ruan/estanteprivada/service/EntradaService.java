@@ -10,6 +10,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +30,12 @@ public class EntradaService {
             List<Entrada> entradas = entradaRepository.buscarPorLivro(livroOptional.get());
 
             return entradas.stream()
-                    .map(EntradaDTO::new)
+                    .map(e -> {
+                        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        String dataFormatada = sdf.format(e.getData());
+
+                        return new EntradaDTO(e, dataFormatada);
+                    })
                     .collect(Collectors.toList());
         }
         else {
@@ -37,8 +43,8 @@ public class EntradaService {
         }
     }
 
-    public void criarEntrada(PostEntradaRequest entradaRequest) throws BadRequestException {
-        Optional<Livro> livroOptional = livroRepository.findById(entradaRequest.livroId());
+    public void criarEntrada(PostEntradaRequest entradaRequest, Long livroId) throws BadRequestException {
+        Optional<Livro> livroOptional = livroRepository.findById(livroId);
 
         if (livroOptional.isPresent()) {
             Livro livro = livroOptional.get();

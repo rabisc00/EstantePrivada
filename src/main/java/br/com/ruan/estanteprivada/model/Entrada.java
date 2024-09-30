@@ -13,7 +13,7 @@ public class Entrada {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Livro livro;
 
     @Column(columnDefinition = "varchar(5000)")

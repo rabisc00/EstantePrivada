@@ -21,8 +21,9 @@ public class EntradaController {
         return entradaService.buscarEntradas(livroId);
     }
 
-    @PostMapping
-    public void criarEntrada(@RequestBody PostEntradaRequest entradaRequest) throws BadRequestException {
-        entradaService.criarEntrada(entradaRequest);
+    @PostMapping("/{livroId}")
+    public void criarEntrada(@RequestBody PostEntradaRequest entradaRequest,
+                             @PathVariable Long livroId) throws BadRequestException {
+        entradaService.criarEntrada(entradaRequest, livroId);
     }
 }
