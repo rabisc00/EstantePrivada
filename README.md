@@ -14,3 +14,6 @@ fazendo com que o livro seja salvo no banco de dados e o usuário seja redirecio
 
 Ao clicar em qualquer dos livros disponíveis, abre uma modal cheia de inputs preenchidos com informações do livro. Alterando qualquer das informações, tem um botão de salvar no canto inferior direito da modal para salvá-las.
 Depois de clicar nele, a página recarrega e as informações já aparecem atualizadas. Nessa mesma modal também tem um botão de excluir, que apaga o livro do banco de dados
+
+# Funcionalidade 3
+Na modal de edição de livros, ao clicar no botão "Entradas" o usuário é redirecionado para uma página contendo detalhes do livro e entradas relacionadas. Essas entradas seriam vezes que o usuário leu o livro, contendo a data, quantos porcento ele já leu do livro, e uma resenha do que ele achou. Sempre que for criada uma entrada com a checkbox "Terminou o livro?" marcada, a sessão de leitura vai ser finalizada, e qualquer outras entradas criadas após isso serão parte de outra sessão.
